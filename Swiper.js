@@ -80,6 +80,17 @@ class Swiper extends Component {
     return propsChanged || stateChanged
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+        if(!isEqual(this.props.cards, prevProps.cards)) {
+            this.setState({
+                ...calculateCardIndexes(this.props.cardIndex, this.props.cards),
+                swipedAllCards: false,
+                panResponderLocked: false,
+                labelType: LABEL_TYPES.NONE,
+            });
+        }
+    }
+    
   componentWillUnmount = () => {
     this._mounted = false
     this.state.pan.x.removeAllListeners()
